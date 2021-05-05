@@ -11,7 +11,7 @@ namespace MyCompany
         public bool IncreaseBalance(decimal amount);
         public bool DecreaseBalance(decimal amount);
 
-        public string GetStatus();
+        public string GetStatus(); 
 
 
     }

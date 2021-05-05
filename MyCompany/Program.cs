@@ -4,63 +4,24 @@ using System.IO;
 
 namespace MyCompany
 {
-     // Human resources department
+    // Human resources department
 
     class Program
     {
         static void Main(string[] args)
         {
 
-            List<Person> persons = new ();
-
-
-            //persons.Add( new Person
-            //    {
-            //        Name = "Andrew",
-            //        Email = "andreas@gmail.com"
-            //    });
-
-            //persons.Add(  new Person
-            //    {
-            //        Name = "Athanassios",
-            //        Email = "anthanassios@gmail.com"
-            //    });
-
-            //persons.Add(new Person
-            //{
-            //    Name = "Dimitrios",
-            //    Email = "dimitrios@gmail.com"
-            //});
-
-            using StreamReader file = new("Data.txt");
-            string line;
-
-            while ((line= file.ReadLine())!=null)
-            {
-               // Console.WriteLine(line);
-                string[] words = line.Split(",");
-
-                Person person = new ()
-                {
-                    Name = words[0],
-                    Email = words[1],
-                    Balance = Decimal.Parse(words[2]),
-                    RegistrationDate = DateTime.Parse(words[3])
-                };
-                persons.Add(person);
-            }
-
-
-
-
+            List<Person> persons = new();
+            if (File.Exists("Data.txt"))
+                persons = getPersons();
 
             foreach (Person person in persons)
             {
-               // person.IncreaseBalance(50);
-                 string text = $"{person.Name}, {person.Email}, {person.Balance}, {person.RegistrationDate}";
+                // person.IncreaseBalance(50);
+                string text = $"{person.Name}, {person.Email}, {person.Balance}, {person.RegistrationDate}";
                 Console.WriteLine(text);
 
-              //  file.WriteLine(text);
+                //  file.WriteLine(text);
 
             }
 
@@ -71,7 +32,8 @@ namespace MyCompany
 
         }
 
-        static void DoWork() {   
+        static void DoWork()
+        {
             decimal price = 30;
             int packets = 2;
             decimal totalPrice = price * packets;
@@ -80,6 +42,46 @@ namespace MyCompany
                 $"the number of packes is {packets}" +
                 $" the total price is {totalPrice}");
         }
+        
+
+
+        public static List<Person> getPersons()
+        {
+            List<Person> persons = new();
+            using StreamReader file = new("Data.txt");
+            string line;
+
+            while ((line = file.ReadLine()) != null)
+            {
+                string[] words = line.Split(",");
+                try
+                {
+                    Person person = new()
+                    {
+                        Name = words[0],
+                        Email = words[1],
+                        Balance = Decimal.Parse(words[2]),
+                        RegistrationDate = DateTime.Parse(words[3])
+                    };
+                    persons.Add(person);
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("parsing error");
+                }
+                
+            }
+            return persons;
+        }
+
+
+
 
     }
+
+
+
+
+
+
 }
