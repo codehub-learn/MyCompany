@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace MyCompany
 {
@@ -11,30 +12,62 @@ namespace MyCompany
         {
 
             List<Person> persons = new ();
-            persons.Add( new Person
-                {
-                    Name = "Andrew",
-                    Email = "andreas@gmail.com"
-                });
 
-            persons.Add(  new Person
-                {
-                    Name = "Athanassios",
-                    Email = "anthanassios@gmail.com"
-                });
 
-            persons.Add(new Person
+            //persons.Add( new Person
+            //    {
+            //        Name = "Andrew",
+            //        Email = "andreas@gmail.com"
+            //    });
+
+            //persons.Add(  new Person
+            //    {
+            //        Name = "Athanassios",
+            //        Email = "anthanassios@gmail.com"
+            //    });
+
+            //persons.Add(new Person
+            //{
+            //    Name = "Dimitrios",
+            //    Email = "dimitrios@gmail.com"
+            //});
+
+            using StreamReader file = new("Data.txt");
+            string line;
+
+            while ((line= file.ReadLine())!=null)
             {
-                Name = "Dimitrios",
-                Email = "dimitrios@gmail.com"
-            });
+               // Console.WriteLine(line);
+                string[] words = line.Split(",");
 
-            foreach(Person person in persons)
-            {
-                Console.WriteLine($"{person.Name}, {person.Email}");
+                Person person = new ()
+                {
+                    Name = words[0],
+                    Email = words[1],
+                    Balance = Decimal.Parse(words[2]),
+                    RegistrationDate = DateTime.Parse(words[3])
+                };
+                persons.Add(person);
             }
 
 
+
+
+
+            foreach (Person person in persons)
+            {
+               // person.IncreaseBalance(50);
+                 string text = $"{person.Name}, {person.Email}, {person.Balance}, {person.RegistrationDate}";
+                Console.WriteLine(text);
+
+              //  file.WriteLine(text);
+
+            }
+
+
+
+            //HrDepartment hr = new();
+            //hr.IncreaseBalance(5);
 
         }
 
